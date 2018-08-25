@@ -14,15 +14,15 @@
 /*****Ready function start*****/
 $(document).ready(function(){
 	admintres();
-	$('.preloader-it > .la-anim-1').addClass('la-animate');
+	//$('.preloader-it > .la-anim-1').addClass('la-animate');
 });
 /*****Ready function end*****/
 
 /*****Load function start*****/
 $(window).on("load",function(){
-	$(".preloader-it").delay(500).fadeOut("slow");
-	/*Progress Bar Animation*/
-	var progressAnim = $('.progress-anim');
+	$(".preloader-it").delay(0).fadeOut("fast");
+	/!*Progress Bar Animation*!/
+	/*var progressAnim = $('.progress-anim');
 	if( progressAnim.length > 0 ){
 		for(var i = 0; i < progressAnim.length; i++){
 			var $this = $(progressAnim[i]);
@@ -37,7 +37,7 @@ $(window).on("load",function(){
 			  offset: 'bottom-in-view'
 			});
 		}
-	}
+	}*/
 });
 /*****Load function* end*****/
 

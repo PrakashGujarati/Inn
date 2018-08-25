@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\RoomType;
+use http\Env\Response;
 use Illuminate\Http\Request;
 
 class RoomTypeController extends Controller
@@ -15,7 +16,8 @@ class RoomTypeController extends Controller
     public function index()
     {
         $roomtypes = RoomType::all();
-        return View('RoomMaster.RoomType.list',compact('roomtypes'));
+        return response()->json($roomtypes);
+        //return View('RoomMaster.RoomType.add',compact('roomtypes'));
     }
 
     /**
@@ -66,8 +68,9 @@ class RoomTypeController extends Controller
      */
     public function edit(RoomType $roomtype)
     {
-        $roomtypes = RoomType::findOrFail($roomtype->id);
-        return View('RoomMaster.RoomType.edit',compact(["roomtypes"]));
+        $roomtype = RoomType::findOrFail($roomtype->id);
+        $roomtypes = RoomType::all();
+        return View('RoomMaster.RoomType.edit',compact(["roomtype","roomtypes"]));
     }
 
     /**
@@ -83,6 +86,7 @@ class RoomTypeController extends Controller
             'name' => 'required',
             'short_name' => 'required'
         ]);
+
         $roomtypes = RoomType::findOrFail($roomtype->id);
         $roomtypes->update($request->all());
         return redirect('/roomtypes');

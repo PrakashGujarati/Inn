@@ -1,22 +1,8 @@
-<div class="form-group">
-    {{ Form::label("Status",null,['class'=>"control-label mb-10 col-sm-2","for"=>"status"]) }}
-    <div class="col-sm-10">
-        {{Form::text('status',null, ['class' => 'form-control','id' =>'status','placeholder' => 'Enter Status']) }}
-    </div>
-    @if ($errors->has('status'))
-        <span class="help-block">
-        <strong>{{ $errors->first('status') }}</strong>
-        </span>
-    @endif
+<div class="form-group mr-25">
+    <label class="control-label mr-10 status_inline" for="Status_inline">Status </label>
+    {{ Form::text('status',null, ['class' => 'form-control','id' =>'status','placeholder' => 'Enter Status']) }}
 </div>
-<div class="form-group">
-    {{ Form::label("Color",null,['class'=>"control-label mb-10 col-sm-2","for"=>"color"]) }}
-    <div class="col-sm-10">
-        {{Form::text('color',null, ['class' => 'form-control','id' =>'color','placeholder' => 'Enter Color']) }}
-    </div>
-    @if ($errors->has('color'))
-        <span class="help-block">
-        <strong>{{ $errors->first('color') }}</strong>
-        </span>
-    @endif
+<div class="form-group mr-25">
+    <label class="control-label mr-10 color_inline" for="Color_inline">Color </label>
+    {{Form::text('color',null, ['class' => 'form-control','id' =>'color','placeholder' => 'Enter Color']) }}
 </div>

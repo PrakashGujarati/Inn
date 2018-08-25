@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Tariff extends Model
 {
     protected $fillable = [
-        'room_id','noofpersons', 'tariff', 'extra_bad',
+        'room_id', 'tariff', 'extra_bed_tariff',
     ];
 
 

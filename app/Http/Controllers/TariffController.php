@@ -15,8 +15,9 @@ class TariffController extends Controller
      */
     public function index()
     {
-        $tariffs = Tariff::all();
-        return View('RoomMaster.Tariff.list',compact('tariffs'));
+        $tariffs = Tariff::with('room')->get();
+        return response()->json($tariffs);
+        //return View('RoomMaster.Tariff.list',compact('tariffs'));
     }
 
     /**
@@ -26,8 +27,9 @@ class TariffController extends Controller
      */
     public function create()
     {
+        $tariffs = Tariff::with('room')->get();
         $room = Room::pluck('room_no', 'id');
-        return View('RoomMaster.Tariff.add',compact('room'));
+        return View('RoomMaster.Tariff.add',compact('tariffs','room'));
     }
 
     /**
@@ -39,9 +41,9 @@ class TariffController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'noofpersons' => 'required',
+            'room_id' => 'required',
             'tariff' => 'required',
-            'extra_bad' => 'required'
+            'extra_bed_tariff' => 'required'
         ]);
 
         // return $request->all();
@@ -84,9 +86,9 @@ class TariffController extends Controller
     public function update(Request $request, Tariff $tariff)
     {
         $request->validate([
-            'noofpersons' => 'required',
+            'room_id' => 'required',
             'tariff' => 'required',
-            'extra_bad' => 'required'
+            'extra_bed_tariff' => 'required'
         ]);
 
         $tariffs = Tariff::findOrFail($tariff->id);

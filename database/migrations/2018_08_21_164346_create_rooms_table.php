@@ -18,7 +18,7 @@ class CreateRoomsTable extends Migration
             $table->integer('roomtype_id')->references('room_types')->on('id');
             $table->integer('room_no');
             $table->integer('capacity');
-            $table->string('ext_no',20);
+            $table->string('extension_no',20);
             $table->timestamps();
         });
     }

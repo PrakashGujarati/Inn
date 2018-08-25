@@ -16,7 +16,9 @@ class RoomController extends Controller
     public function index()
     {
         $rooms = Room::all();
-        return View('RoomMaster.Room.list',compact('rooms'));
+        return response()->json($rooms);
+        //$roomtype = RoomType::pluck('name', 'id');
+        //return View('RoomMaster.Room.add',compact('rooms','roomtype'));
     }
 
     /**
@@ -26,8 +28,9 @@ class RoomController extends Controller
      */
     public function create()
     {
+        $rooms = Room::all();
         $roomtype = RoomType::pluck('name', 'id');
-        return View('RoomMaster.Room.add',compact('roomtype'));
+        return View('RoomMaster.Room.add',compact('rooms','roomtype'));
     }
 
     /**
@@ -38,10 +41,12 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
+            'roomtype_id' => 'required',
             'room_no' => 'required',
             'capacity' => 'required',
-            'ext_no' => 'required',
+            'extension_no' => 'required',
         ]);
 
         // return $request->all();
@@ -84,10 +89,12 @@ class RoomController extends Controller
     public function update(Request $request, Room $room)
     {
         $request->validate([
+            'roomtype_id' => 'required',
             'room_no' => 'required',
             'capacity' => 'required',
-            'ext_no' => 'required',
+            'extension_no' => 'required',
         ]);
+
         $rooms = Room::findOrFail($room->id);
         $rooms->update($request->all());
         return redirect('/rooms');

@@ -1,39 +1,18 @@
-<div class="form-group">
-        {{ Form::label("Room Type",null,['class'=>"control-label mb-10 col-sm-2","for"=>"roomtype_id"]) }}
-    <div class="col-sm-10">
-        {{Form::select('roomtype_id', $roomtype, null, ['class' => 'form-control','id' =>'roomtype_id','placeholder' => 'Select Room Type']) }}
-    </div>
+<div class="form-group mr-25">
+    <label class="control-label mr-10 roomtype_id_inline" for="roomtype_inline">Room Type </label>
+    {{Form::select('roomtype_id', $roomtype, null, ['class' => 'form-control','id' =>'roomtype_id','placeholder' => 'Select Room Type']) }}
 </div>
-<div class="form-group">
-        {{ Form::label("room_no",null,['class'=>"control-label mb-10 col-sm-2","for"=>"room_no"]) }}
-    <div class="col-sm-10">
-        {{Form::text('room_no',null, ['class' => 'form-control','id' =>'status','placeholder' => 'Enter Room No']) }}
-    </div>
-    @if ($errors->has('room_no'))
-        <span class="help-block">
-        <strong>{{ $errors->first('room_no') }}</strong>
-        </span>
-    @endif
+<div class="form-group mr-25">
+    <label class="control-label mr-10 room_no_inline" for="room_no_inline">Room No </label>
+    {{Form::text('room_no',null, ['class' => 'form-control','id' =>'room_no','placeholder' => 'Enter Room No.','style'=>'width: 100px;']) }}
 </div>
-<div class="form-group">
-        {{ Form::label("Room Capacity",null,['class'=>"control-label mb-10 col-sm-2","for"=>"room capacity"]) }}
-    <div class="col-sm-10">
-        {{Form::number('capacity',null, ['class' => 'form-control','id' =>'capacity','placeholder' => 'Enter Room Capacity']) }}
-    </div>
-    @if ($errors->has('capacity'))
-        <span class="help-block">
-        <strong>{{ $errors->first('capacity') }}</strong>
-        </span>
-    @endif
+
+<div class="form-group mr-25">
+    <label class="control-label mr-10 capacity_inline" for="capacity_inline">Room Capacity </label>
+    {{ Form::text('capacity',null, ['class' => 'form-control','id' =>'capacity','placeholder' => 'Enter Capacity','style'=>'width: 100px;']) }}
 </div>
-<div class="form-group">
-    {{ Form::label("ExtNo.",null,['class'=>"control-label mb-10 col-sm-2","for"=>"ext_no"]) }}
-    <div class="col-sm-10">
-        {{Form::text('ext_no',null, ['class' => 'form-control','id' =>'ext_no','placeholder' => 'Enter ExtNo.']) }}
-    </div>
-    @if ($errors->has('ext_no'))
-        <span class="help-block">
-        <strong>{{ $errors->first('ext_no') }}</strong>
-        </span>
-    @endif
+
+<div class="form-group mr-25">
+    <label class="control-label mr-10 extension_no_inline" for="extension_no_inline">Extension No </label>
+    {{Form::text('extension_no',null, ['class' => 'form-control','id' =>'extension_no','placeholder' => 'Enter Extension No.']) }}
 </div>

@@ -15,7 +15,8 @@ class RoomStatusController extends Controller
     public function index()
     {
         $roomstatus = RoomStatus::all();
-        return View('RoomMaster.RoomStatus.list',compact('roomstatus'));
+        return response()->json($roomstatus);
+        //return View('RoomMaster.RoomStatus.list',compact('roomstatus'));
     }
 
     /**
@@ -25,7 +26,8 @@ class RoomStatusController extends Controller
      */
     public function create()
     {
-        return View('RoomMaster.RoomStatus.add');
+        $roomstatus = RoomStatus::all();
+        return View('RoomMaster.RoomStatus.add',compact('roomstatus'));
     }
 
     /**
@@ -41,7 +43,6 @@ class RoomStatusController extends Controller
             'color' => 'required'
         ]);
 
-        // return $request->all();
         RoomStatus::create($request->all());
 
         return redirect('/roomstatus');
