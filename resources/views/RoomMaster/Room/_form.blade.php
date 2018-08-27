@@ -4,12 +4,12 @@
 </div>
 <div class="form-group mr-25">
     <label class="control-label mr-10 room_no_inline" for="room_no_inline">Room No </label>
-    {{Form::text('room_no',null, ['class' => 'form-control','id' =>'room_no','placeholder' => 'Enter Room No.','style'=>'width: 100px;']) }}
+    {{Form::text('room_no',null, ['class' => 'form-control','id' =>'room_no','placeholder' => 'Enter No.','style'=>'width: 120px;']) }}
 </div>
 
 <div class="form-group mr-25">
     <label class="control-label mr-10 capacity_inline" for="capacity_inline">Room Capacity </label>
-    {{ Form::text('capacity',null, ['class' => 'form-control','id' =>'capacity','placeholder' => 'Enter Capacity','style'=>'width: 100px;']) }}
+    {{ Form::text('capacity',null, ['class' => 'form-control','id' =>'capacity','placeholder' => 'Enter Capacity','style'=>'width: 120px;']) }}
 </div>
 
 <div class="form-group mr-25">

@@ -40,13 +40,14 @@
                                     <input type="hidden" id="token" name="_token" value="{{ csrf_token() }}">
 
                                     @include('RoomMaster.RoomType._form')
-                                    <a class="btn btn-orange  btn-anim pull-right ml-5" href="/rooms/create">Add</a>
+                                    <a class="btn btn-orange  btn-anim pull-right ml-5" href="/roomtypes/create">Add</a>
                                     {{ Form::button('Edit', ['type' => 'button', 'id' => 'add', 'class' => 'btn btn-orange  btn-anim pull-right'] )  }}
                                     {!! Form::close() !!}
                                 </div>
                             </div>
                         </div>
                         <div class="clearfix"></div>
+                        <hr style="border-top: 3px solid #4267b2;">
                     </div>
                     <div class="panel-wrapper collapse in">
                         <div class="panel-body">
@@ -55,10 +56,8 @@
                                     <table id="datable_1" class="table table-hover display  pb-30" >
                                         <thead>
                                         <tr>
-                                            <th>Room No</th>
-                                            <th>Room Type</th>
-                                            <th>Capacity</th>
-                                            <th>Extension No.</th>
+                                            <th>Name</th>
+                                            <th>Short Name</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>

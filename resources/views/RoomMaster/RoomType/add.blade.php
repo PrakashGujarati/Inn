@@ -46,6 +46,7 @@
                             </div>
                         </div>
                         <div class="clearfix"></div>
+                        <hr style="border-top: 3px solid #4267b2;">
                     </div>
                     <div class="panel-wrapper collapse in">
                         <div class="panel-body">

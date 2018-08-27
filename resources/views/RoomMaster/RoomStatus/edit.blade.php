@@ -5,6 +5,8 @@
 @endsection
 
 @section('head')
+    <!-- Bootstrap Colorpicker CSS -->
+    <link href="{{asset('dist/vendors/bower_components/colorpicker/colorpicker.min.css')}}" rel="stylesheet" type="text/css"/>
     <!-- Data table CSS -->
     <link href="{{asset('dist/vendors/bower_components/datatables/media/css/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('dist/vendors/bower_components/datatables.net-responsive/css/responsive.dataTables.min.css')}}" rel="stylesheet" type="text/css"/>
@@ -50,6 +52,7 @@
                             </div>
                         </div>
                         <div class="clearfix"></div>
+                        <hr style="border-top: 3px solid #4267b2;">
                     </div>
                     <div class="panel-wrapper collapse in">
                         <div class="panel-body">
@@ -78,9 +81,14 @@
     <!-- Data table JavaScript -->
     <script src="{{asset('dist/vendors/bower_components/datatables/media/js/jquery.dataTables.min.js')}}"></script>
 
+    <!-- Bootstrap Colorpicker JavaScript -->
+    <script src="{{asset('dist/vendors/bower_components/colorpicker/bootstrap-colorpicker.js')}}"></script>
 
     <script>
         $(document).ready(function (e) {
+            //$('#color').val('#477bff');
+            $('#cp2').colorpicker();
+
             var table = $('#datable_1').DataTable({
                 "ajax": {
                     "url": "/roomstatus",
