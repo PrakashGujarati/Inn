@@ -19,6 +19,7 @@ class CreateTariffsTable extends Migration
             $table->float('tariff',8,2);
             $table->float('extra_bed_tariff',8,2);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

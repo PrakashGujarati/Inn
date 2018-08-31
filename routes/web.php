@@ -15,7 +15,9 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::resource('roomtypes','RoomTypeController');
-Route::resource('roomstatus','RoomStatusController');
-Route::resource('rooms','RoomController');
-Route::resource('tariffs','TariffController');
+Route::group(['middleware'=>'auth'],function (){
+    Route::resource('roomtypes','RoomTypeController');
+    Route::resource('roomstatus','RoomStatusController');
+    Route::resource('rooms','RoomController');
+    Route::resource('tariffs','TariffController');
+});

@@ -20,6 +20,7 @@ class CreateRoomsTable extends Migration
             $table->integer('capacity');
             $table->string('extension_no',20);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

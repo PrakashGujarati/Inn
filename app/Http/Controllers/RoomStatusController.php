@@ -95,8 +95,9 @@ class RoomStatusController extends Controller
      * @param  \App\RoomStatus  $roomStatus
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RoomStatus $roomStatus)
+    public function destroy(Request $request)
     {
-        //
+        RoomStatus::destroy($request->id);
+        return Response('Success');
     }
 }

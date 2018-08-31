@@ -18,6 +18,7 @@ class CreateRoomStatusesTable extends Migration
             $table->string('status',100);
             $table->string('color',100);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

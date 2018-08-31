@@ -101,7 +101,8 @@
                                 'room_no': json[i].room_no,
                                 'capacity': json[i].capacity,
                                 'extension_no': json[i].extension_no,
-                                'action': '<a class="btn btn-primary" href="/rooms/'+json[i].id+'/edit">Edit</a>',
+                                'action': '<a class="btn btn-sm btn-primary ti-pencil" style="padding:10px;margin-right:5px;" href="/rooms/'+json[i].id+'/edit"></a>'+
+                                    '<button type="button" class="delete btn btn-sm btn-danger ti-trash" style="padding:10px;" data-delete-id="'+json[i].id+'" data-token="'+'{!! csrf_token() !!}'+'" ></button>'
                             })
                         }
                         return return_data;
@@ -112,7 +113,7 @@
                     { "data": "room_no" },
                     { "data": "capacity" },
                     { "data": "extension_no" },
-                    { "data": "action","width": "40px" }
+                    { "data": "action","width": "80px" }
                 ],
                 "order": [[ 1, "asc" ]]
             });
@@ -152,6 +153,50 @@
                             });
                         }
                     });
+            });
+
+            $(document).on('click', '.delete', function () {
+
+                var id = $(this).data("delete-id");
+                var token = $(this).data("token");
+
+
+                swal({
+                    title: "Are you sure?",
+                    text: "Do you want to delete it perminantly !",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#f83f37",
+                    confirmButtonText: "Yes, delete it!",
+                    cancelButtonText: "No, cancel plx!",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                }, function(isConfirm){
+                    if (isConfirm) {
+                        $.ajax(
+                            {
+                                url: "/rooms/" + id,
+                                type: 'POST',
+                                data: {
+                                    "id": id,
+                                    "_method": 'DELETE',
+                                    "_token": token
+                                },
+                                success: function (result) {
+                                    swal("Deleted!", "Your Record is deleted.", "success");
+                                    table.ajax.reload();
+                                },
+                                error: function (request, status, error) {
+                                    var val = request.responseText;
+                                    console.log(val);
+                                    alert("error" + val);
+                                }
+                            });
+                    } else {
+                        swal("Cancelled", "Your imaginary file is safe :)", "error");
+                    }
+                });
+                return false;
             });
         });
     </script>

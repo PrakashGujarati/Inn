@@ -98,8 +98,9 @@ class RoomTypeController extends Controller
      * @param  \App\RoomType  $roomType
      * @return \Illuminate\Http\Response
      */
-    public function destroy(RoomType $roomType)
+    public function destroy(Request $request)
     {
-        //
+        RoomType::destroy($request->id);
+        return Response('Success');
     }
 }

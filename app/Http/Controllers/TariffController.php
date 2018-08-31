@@ -102,8 +102,9 @@ class TariffController extends Controller
      * @param  \App\Tariff  $tariff
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tariff $tariff)
+    public function destroy(Request $request)
     {
-        //
+        Tariff::destroy($request->id);
+        return Response('Success');
     }
 }

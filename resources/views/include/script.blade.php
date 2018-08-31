@@ -13,6 +13,8 @@
 <script src="{{ asset('dist/vendors/jquery.sparkline/dist/jquery.sparkline.min.js') }}"></script>
 <!-- Owl JavaScript -->
 <script src="{{ asset('dist/vendors/bower_components/owl.carousel/dist/owl.carousel.min.js') }}"></script>
+<!-- Sweet-Alert  -->
+<script src="{{asset('dist/vendors/bower_components/sweetalert/dist/sweetalert.min.js')}}"></script>
 <!-- Switchery JavaScript -->
 <script src="{{ asset('dist/vendors/bower_components/switchery/dist/switchery.min.js') }}"></script>
 <!-- Init JavaScript -->
