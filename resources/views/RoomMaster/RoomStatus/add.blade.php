@@ -181,7 +181,7 @@
                                 }
                             });
                     } else {
-                        swal("Cancelled", "Your imaginary file is safe :)", "error");
+                        swal("Cancelled", "Your record is safe :)", "error");
                     }
                 });
                 return false;
