@@ -25,6 +25,18 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('hotel_code') ? ' has-error' : '' }}">
+                            <label for="hotel_code" class="col-md-4 control-label">Hotel Code</label>
+                            <div class="col-md-6">
+                                <input id="hotel_code" type="text" class="form-control" name="hotel_code" value="{{ old('hotel_code') }}" required autofocus>
+                                @if ($errors->has('hotel_code'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('hotel_code') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 

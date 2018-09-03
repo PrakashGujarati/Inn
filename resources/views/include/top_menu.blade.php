@@ -79,13 +79,13 @@
                     <a href="javascript:void(0);" data-toggle="collapse" data-target="#ecom_dr"><div class="pull-left"><i class="ti-shopping-cart  mr-20"></i><span class="right-nav-text">Account Master</span></div><div class="pull-right"><i class="ti-angle-down"></i></div><div class="clearfix"></div></a>
                     <ul id="ecom_dr" class="collapse collapse-level-1">
                         <li>
-                            <a href="#">Ledger Master</a>
+                            <a href="/ledgers/">Ledger Master</a>
                         </li>
                         <li>
-                            <a href="#">Ledger Group Master</a>
+                            <a href="/ledgergroups/">Ledger Group Master</a>
                         </li>
                         <li>
-                            <a href="#">Designation Master</a>
+                            <a href="/designations/">Designation Master</a>
                         </li>
                     </ul>
                 </li>

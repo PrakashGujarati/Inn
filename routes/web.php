@@ -16,8 +16,20 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::group(['middleware'=>'auth'],function (){
+    //Room Master
     Route::resource('roomtypes','RoomTypeController');
     Route::resource('roomstatus','RoomStatusController');
     Route::resource('rooms','RoomController');
     Route::resource('tariffs','TariffController');
+
+    //Ledger Master
+    Route::get('ledgers/getDataTable','LedgerController@getDataTable');
+    Route::resource('ledgers','LedgerController');
+    Route::get('ledgergroups/getDataTable','LedgerGroupController@getDataTable');
+    Route::resource('ledgergroups','LedgerGroupController');
+    Route::get('designations/getDataTable','DesignationController@getDataTable');
+    Route::resource('designations','DesignationController');
+
+
+
 });

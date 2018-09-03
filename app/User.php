@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'hotel_code', 'email', 'password',
     ];
 
     /**
@@ -26,4 +26,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function ledgers()
+    {
+        return $this->hasMany(Ledger::class);
+    }
+    public function ledgerGroups()
+    {
+        return $this->hasMany(LedgerGroup::class);
+    }
 }

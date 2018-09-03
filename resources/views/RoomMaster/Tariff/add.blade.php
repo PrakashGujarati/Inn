@@ -54,7 +54,7 @@
                         <div class="panel-body">
                             <div class="table-wrap">
                                 <div class="table-responsive">
-                                    <table id="datable_1" class="table table-hover display  pb-30" >
+                                    <table id="datable_1" class="table table-hover display  pb-30" style="table-layout:fixed;width: 98% !important;">
                                         <thead>
                                         <tr>
                                             <th>Room No</th>
@@ -152,7 +152,7 @@
                     showCancelButton: true,
                     confirmButtonColor: "#f83f37",
                     confirmButtonText: "Yes, delete it!",
-                    cancelButtonText: "No, cancel plx!",
+                    cancelButtonText: "No, cancel!",
                     closeOnConfirm: false,
                     closeOnCancel: false
                 }, function(isConfirm){
