@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class LedgerGroupController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:ledgergroups.index')->only(['index']);
+        $this->middleware('permission:ledgergroups.create')->only('create','store');
+        $this->middleware('permission:ledgergroups.edit')->only('show','edit','update');
+        $this->middleware('permission:ledgergroups.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -109,7 +116,6 @@ class LedgerGroupController extends Controller
      */
     public function getDataTable()
     {
-       // $ledgergroups = LedgerGroup::all();
         $ledgergroups = Auth::user()->ledgerGroups();
         return DataTables::of($ledgergroups)
             ->addColumn('edit',function ($ledgergroup){

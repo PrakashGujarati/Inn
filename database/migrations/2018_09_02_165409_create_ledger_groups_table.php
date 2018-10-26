@@ -15,7 +15,7 @@ class CreateLedgerGroupsTable extends Migration
     {
         Schema::create('ledger_groups', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->references('users')->on('id');
+            $table->integer('user_id')->references('id')->on('users');
             $table->string('name',150);
             $table->string('alias',50);
             $table->timestamps();

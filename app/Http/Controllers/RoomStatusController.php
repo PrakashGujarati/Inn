@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\RoomStatus;
 use Illuminate\Http\Request;
 
@@ -12,6 +13,14 @@ class RoomStatusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('permission:roomstatus.index')->only(['index']);
+        $this->middleware('permission:roomstatus.create')->only('create','store');
+        $this->middleware('permission:roomstatus.edit')->only('show','edit','update');
+        $this->middleware('permission:roomstatus.destroy')->only('destroy');
+    }
+
     public function index()
     {
         $roomstatus = RoomStatus::all();
@@ -43,7 +52,9 @@ class RoomStatusController extends Controller
             'color' => 'required'
         ]);
 
-        RoomStatus::create($request->all());
+
+        //RoomStatus::create($request->all());
+        Auth::user()->roomstatus()->create($request->all());
 
         return redirect('/roomstatus');
     }
@@ -78,13 +89,17 @@ class RoomStatusController extends Controller
      * @param  \App\RoomStatus  $roomStatus
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RoomStatus $roomstatus)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'status' => 'required',
             'color' => 'required'
         ]);
-        $roomstatus = RoomStatus::findOrFail($roomstatus->id);
+
+        /*$roomstatus = RoomStatus::findOrFail($id);
+        $roomstatus->update($request->all());*/
+
+        $roomstatus = Auth::user()->roomstatus()->findOrFail($id);
         $roomstatus->update($request->all());
         return redirect('/roomstatus');
     }

@@ -4,18 +4,28 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\RoomType;
 
 class Tariff extends Model
 {
     use SoftDeletes;
 
     protected $fillable = [
-        'room_id', 'tariff', 'extra_bed_tariff',
+        'room_no', 'roomtype_id', 'capacity'
     ];
 
-
-    public function room()
+    public function user()
     {
-        return $this->belongsTo(Room::class);
+        return $this->belongsTo(User::class);
     }
+
+    public function roomtype()
+    {
+        return $this->belongsTo(RoomType::class);
+    }
+
+
+
+
+
 }

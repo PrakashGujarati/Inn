@@ -10,6 +10,21 @@
     <!-- Data table CSS -->
     <link href="{{asset('dist/vendors/bower_components/datatables/media/css/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('dist/vendors/bower_components/datatables.net-responsive/css/responsive.dataTables.min.css')}}" rel="stylesheet" type="text/css"/>
+    <style>
+        .edit,.delete{
+            visibility: hidden;
+        }
+        @permission('roomstatus.edit')
+        .edit{
+            visibility: visible;
+        }
+        @endpermission
+        @permission('roomstatus.destroy')
+        .delete{
+            visibility: visible;
+        }
+        @endpermission
+    </style>
 @endsection
 
 @section('content')

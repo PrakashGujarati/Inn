@@ -6,8 +6,25 @@
 
 @section('head')
     <!-- Data table CSS -->
-    <link href="{{asset('dist/vendors/bower_components/datatables/media/css/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css"/>
-    <link href="{{asset('dist/vendors/bower_components/datatables.net-responsive/css/responsive.dataTables.min.css')}}" rel="stylesheet" type="text/css"/>
+    <link href="{{asset('dist/vendors/bower_components/datatables/media/css/jquery.dataTables.min.css')}}"
+          rel="stylesheet" type="text/css"/>
+    <link href="{{asset('dist/vendors/bower_components/datatables.net-responsive/css/responsive.dataTables.min.css')}}"
+          rel="stylesheet" type="text/css"/>
+    <style>
+        .edit,.delete{
+            visibility: hidden;
+        }
+        @permission('tariffs.edit')
+        .edit{
+            visibility: visible;
+        }
+        @endpermission
+        @permission('tariffs.destroy')
+        .delete{
+            visibility: visible;
+        }
+        @endpermission
+    </style>
 @endsection
 
 @section('content')
@@ -39,7 +56,7 @@
                     <div class="panel-wrapper collapse in">
                         <div class="panel-body">
                             <div class="form-wrap">
-                                {!! Form::model($tariffs,['method'=>'post','action' =>  ['TariffController@update', $tariffs->id], 'id' => 'tariffs', 'class' => 'form-inline',"files" => "true"]) !!}
+                                {!! Form::model($tariffs,['method'=>'post','action' =>  ['TariffController@update',$tariffs->id], 'id' => 'tariffs', 'class' => 'form-wrap',"files" => "true"]) !!}
                                 <input type="hidden" id="token" name="_token" value="{{ csrf_token() }}">
 
                                 @include('RoomMaster.Tariff._form')
@@ -56,7 +73,8 @@
                         <div class="panel-body">
                             <div class="table-wrap">
                                 <div class="table-responsive">
-                                    <table id="datable_1" class="table table-hover display  pb-30"  style="table-layout:fixed;width: 98% !important;">
+                                    <table id="datable_1" class="table table-hover display  pb-30"
+                                           style="table-layout:fixed;width: 98% !important;">
                                         <thead>
                                         <tr>
                                             <th>Room No</th>
@@ -83,30 +101,54 @@
 
     <script>
         $(document).ready(function (e) {
+
+            $.ajax({
+                url: "/roomtype/tariffs?id="+{{$id}},
+                type: 'get',
+                success: function(result){
+                    $("#person_one_tariff").val(result.person_one);
+                    $("#person_two_tariff").val(result.person_two);
+                    $("#person_three_tariff").val(result.person_three);
+                    $("#person_four_tariff").val(result.person_four);
+                    $("#person_five_tariff").val(result.person_five);
+                    $("#extra_person_tariff").val(result.extra_person);
+                    $("#person_one_nac_tariff").val(result.person_one_nac);
+                    $("#person_two_nac_tariff").val(result.person_two_nac);
+                    $("#person_three_nac_tariff").val(result.person_three_nac);
+                    $("#person_four_nac_tariff").val(result.person_four_nac);
+                    $("#person_five_nac_tariff").val(result.person_five_nac);
+                    $("#extra_person_nac_tariff").val(result.extra_person_nac);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+                    $('#content').html(errorMsg);
+                }
+            });
+
             var table = $('#datable_1').DataTable({
                 "ajax": {
                     "url": "/tariffs",
                     "dataSrc": function (json) {
                         var return_data = new Array();
-                        for(var i=0;i< json.length; i++){
+                        for (var i = 0; i < json.length; i++) {
                             return_data.push({
-                                'room_id': json[i].room_id,
-                                'tariff': json[i].tariff,
-                                'extra_bed_tariff': json[i].extra_bed_tariff,
-                                'action': '<a class="btn btn-sm btn-primary ti-pencil" style="padding:10px;margin-right:5px;" href="/tariffs/'+json[i].id+'/edit"></a>'+
-                                    '<button type="button" class="delete btn btn-sm btn-danger ti-trash" style="padding:10px;" data-delete-id="'+json[i].id+'" data-token="'+'{!! csrf_token() !!}'+'" ></button>'
+                                'room_no': json[i].room_no,
+                                'roomtype_id': json[i].roomtype_id,
+                                'capacity': json[i].capacity,
+                                'action': '<a class="btn btn-sm btn-primary ti-pencil" style="padding:10px;margin-right:5px;" href="/tariffs/' + json[i].id + '/edit"></a>' +
+                                    '<button type="button" class="delete btn btn-sm btn-danger ti-trash" style="padding:10px;" data-delete-id="' + json[i].id + '" data-token="' + '{!! csrf_token() !!}' + '" ></button>'
                             })
                         }
                         return return_data;
                     }
                 },
                 "columns": [
-                    { "data": "room_id" },
-                    { "data": "tariff" },
-                    { "data": "extra_bed_tariff" },
-                    { "data": "action","width": "80px" }
+                    {"data": "room_no"},
+                    {"data": "roomtype_id"},
+                    {"data": "capacity"},
+                    {"data": "action", "width": "80px"}
                 ],
-                "order": [[ 0, "asc" ]]
+                "order": [[0, "asc"]]
             });
 
             $("#add").click(function () {
@@ -136,8 +178,8 @@
                         error: function (request, status, error) {
                             var data = request.responseText;
                             $.each(request.responseJSON.errors, function (key, value) {
-                                $('.'+key+'_inline').html('*'+key);
-                                $('.'+key+'_inline').css('color','red');
+                                $('.' + key + '_inline').html('*' + key);
+                                $('.' + key + '_inline').css('color', 'red');
                             });
                         }
                     });
@@ -159,7 +201,7 @@
                     cancelButtonText: "No, cancel!",
                     closeOnConfirm: false,
                     closeOnCancel: false
-                }, function(isConfirm){
+                }, function (isConfirm) {
                     if (isConfirm) {
                         $.ajax(
                             {
@@ -186,6 +228,45 @@
                 });
                 return false;
             });
+
+            /* Get Room Types Record using AJAX Requres */
+            $(document).on('change', '#roomtype_id', function () {
+
+                var id = $(this).val();
+                var token = $(this).data("token");
+
+                $.ajax(
+                    {
+                        url: "/roomtype/tariffs?id=" + id,
+                        type: 'GET',
+                        data: {
+                            "id": id,
+                            "_token": token
+                        },
+                        success: function (result) {
+                            $("#person_one_tariff").val(result.person_one);
+                            $("#person_two_tariff").val(result.person_two);
+                            $("#person_three_tariff").val(result.person_three);
+                            $("#person_four_tariff").val(result.person_four);
+                            $("#person_five_tariff").val(result.person_five);
+                            $("#extra_person_tariff").val(result.extra_person);
+                            $("#person_one_nac_tariff").val(result.person_one_nac);
+                            $("#person_two_nac_tariff").val(result.person_two_nac);
+                            $("#person_three_nac_tariff").val(result.person_three_nac);
+                            $("#person_four_nac_tariff").val(result.person_four_nac);
+                            $("#person_five_nac_tariff").val(result.person_five_nac);
+                            $("#extra_person_nac_tariff").val(result.extra_person_nac);
+                        },
+                        error: function (request, status, error) {
+                            var val = request.responseText;
+                            console.log(val);
+                            alert("error" + val);
+                        }
+                    });
+            });
+
+
+
         });
     </script>
 @stop

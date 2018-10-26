@@ -11,7 +11,21 @@
 
     <link href="{{asset('dist/vendors/bower_components/datatables.net-responsive/css/responsive.dataTables.min.css')}}"
           rel="stylesheet" type="text/css"/>
-
+    <style>
+        .edit,.delete{
+            visibility: hidden;
+        }
+        @permission('rooms.edit')
+        .edit{
+            visibility: visible;
+        }
+        @endpermission
+        @permission('rooms.destroy')
+        .delete{
+            visibility: visible;
+        }
+        @endpermission
+    </style>
 @endsection
 
 @section('content')

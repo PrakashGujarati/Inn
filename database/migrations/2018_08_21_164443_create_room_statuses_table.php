@@ -15,6 +15,7 @@ class CreateRoomStatusesTable extends Migration
     {
         Schema::create('room_statuses', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->references('id')->on('users');
             $table->string('status',100);
             $table->string('color',100);
             $table->timestamps();

@@ -12,6 +12,21 @@
     <!-- Data table CSS -->
     <link href="{{asset('dist/vendors/bower_components/datatables/media/css/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('dist/vendors/bower_components/datatables.net-responsive/css/responsive.dataTables.min.css')}}" rel="stylesheet" type="text/css"/>
+    <style>
+        .edit,.delete{
+            visibility: hidden;
+        }
+        @permission('roomstatus.edit')
+        .edit{
+            visibility: visible;
+        }
+        @endpermission
+        @permission('roomstatus.destroy')
+        .delete{
+            visibility: visible;
+        }
+        @endpermission
+    </style>
 @endsection
 
 @section('content')
@@ -98,7 +113,7 @@
                             return_data.push({
                                 'status': json[i].status,
                                 'color': json[i].color,
-                                'action': '<a class="btn btn-sm btn-primary ti-pencil" style="padding:10px;margin-right:5px;" href="/roomtypes/'+json[i].id+'/edit"></a>'+
+                                'action': '<a class="edit btn btn-sm btn-primary ti-pencil" style="padding:10px;margin-right:5px;" href="/roomtypes/'+json[i].id+'/edit"></a>'+
                                     '<button type="button" class="delete btn btn-sm btn-danger ti-trash" style="padding:10px;" data-delete-id="'+json[i].id+'" data-token="'+'{!! csrf_token() !!}'+'" ></button>'
                             })
                         }

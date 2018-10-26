@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\Tariff;
 use App\Room;
+use App\RoomType;
 use Illuminate\Http\Request;
 
 class TariffController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:tariffs.index')->only(['index']);
+        $this->middleware('permission:tariffs.create')->only('create','store');
+        $this->middleware('permission:tariffs.edit')->only('show','edit','update');
+        $this->middleware('permission:tariffs.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,9 +24,8 @@ class TariffController extends Controller
      */
     public function index()
     {
-        $tariffs = Tariff::with('room')->get();
+        $tariffs = Tariff::all();  /** select * from table **/
         return response()->json($tariffs);
-        //return View('RoomMaster.Tariff.list',compact('tariffs'));
     }
 
     /**
@@ -27,9 +35,9 @@ class TariffController extends Controller
      */
     public function create()
     {
-        $tariffs = Tariff::with('room')->get();
-        $room = Room::pluck('room_no', 'id');
-        return View('RoomMaster.Tariff.add',compact('tariffs','room'));
+        //$tariffs = Tariff::all();
+        $roomtype = RoomType::pluck('name', 'id'); /** To get only selected field from table **/
+        return View('RoomMaster.Tariff.add',compact('roomtype'));
     }
 
     /**
@@ -40,15 +48,8 @@ class TariffController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'room_id' => 'required',
-            'tariff' => 'required',
-            'extra_bed_tariff' => 'required'
-        ]);
-
-        // return $request->all();
-        Tariff::create($request->all());
-
+        //Tariff::create($request->all()); /** Create method is for Insert query to store all fields **/
+        Auth::user()->tariffs()->create($request->all());
         return redirect('/tariffs');
     }
 
@@ -69,11 +70,13 @@ class TariffController extends Controller
      * @param  \App\Tariff  $tariff
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tariff $tariff)
+    public function edit($id)
     {
-        $room = Room::pluck('room_no', 'id');
-        $tariffs = Tariff::findOrFail($tariff->id);
-        return View('RoomMaster.Tariff.edit',compact(["tariffs","room"]));
+
+        $tariffs = Tariff::findOrFail($id);
+        $roomtype = RoomType::pluck('name', 'id');
+        $id = $id;
+        return View('RoomMaster.Tariff.edit',compact(["tariffs","roomtype","id"]));
     }
 
     /**
@@ -83,7 +86,7 @@ class TariffController extends Controller
      * @param  \App\Tariff  $tariff
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tariff $tariff)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'room_id' => 'required',
@@ -91,8 +94,10 @@ class TariffController extends Controller
             'extra_bed_tariff' => 'required'
         ]);
 
-        $tariffs = Tariff::findOrFail($tariff->id);
-        $tariffs->update($request->all());
+        //$tariffs = Tariff::findOrFail($id);
+        //$tariffs->update($request->all());
+        $ledgergroup = Auth::user()->tariffs()->findOrFail($id);
+        $ledgergroup->update($request->all());
         return redirect('/tariffs');
     }
 
@@ -107,4 +112,5 @@ class TariffController extends Controller
         Tariff::destroy($request->id);
         return Response('Success');
     }
+
 }

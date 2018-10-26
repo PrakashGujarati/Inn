@@ -12,4 +12,8 @@ class RoomStatus extends Model
         'status', 'color',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

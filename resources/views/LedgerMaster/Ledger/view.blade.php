@@ -12,6 +12,21 @@
     <link href="{{asset('dist/vendors/bower_components/datatables.net-responsive/css/responsive.dataTables.min.css')}}"
           rel="stylesheet" type="text/css"/>
 
+    <style>
+        .edit,.delete{
+            visibility: hidden;
+        }
+        @permission('ledgers.edit')
+        .edit{
+            visibility: visible;
+        }
+        @endpermission
+        @permission('ledgers.destroy')
+        .delete{
+            visibility: visible;
+        }
+        @endpermission
+    </style>
 @endsection
 
 @section('content')

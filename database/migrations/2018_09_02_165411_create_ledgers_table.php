@@ -15,7 +15,7 @@ class CreateLedgersTable extends Migration
     {
         Schema::create('ledgers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->references('users')->on('id');
+            $table->integer('user_id')->references('id')->on('users');
             $table->string('name',150);
             $table->string('alias',100);
             $table->string('opening',100);

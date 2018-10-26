@@ -46,13 +46,13 @@
                                 </div>
                                 <div class="form-wrap">
                                     <form method="POST" action="{{ route('login') }}">
-                                        {{ csrf_field() }}
-                                        <div class="form-group {{ $errors->has('email') ? ' has-error' : '' }}">
-                                            <label class="control-label mb-10" >Email</label>
-                                            <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="Enter Email"  required autofocus style="box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.4), 0 5px 15px 0 rgba(0, 0, 0, 0.19);border:1px solid #000;">
-                                            @if ($errors->has('email'))
+                                        @csrf
+                                        <div class="form-group {{ $errors->has('username') ? ' has-error' : '' }}">
+                                            <label class="control-label mb-10" >Username</label>
+                                            <input id="username" type="username" class="form-control" name="username" value="{{ old('username') }}" placeholder="Enter Username"  required autofocus style="box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.4), 0 5px 15px 0 rgba(0, 0, 0, 0.19);border:1px solid #000;">
+                                            @if ($errors->has('username'))
                                                 <span class="help-block">
-                                                    <strong>{{ $errors->first('email') }}</strong>
+                                                    <strong>{{ $errors->first('username') }}</strong>
                                                 </span>
                                             @endif
                                         </div>
@@ -69,7 +69,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label mb-10" >Hotel Code</label>
-                                            <input type="text" class="form-control" required="true" id="hotel_code" name="hotel_code" placeholder="Enter Hotel Code" style="box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.4), 0 5px 15px 0 rgba(0, 0, 0, 0.19);border:1px solid #000;">
+                                            <input type="text" class="form-control" required="true" id="hotelcode" name="hotelcode" placeholder="Enter Hotel Code" style="box-shadow:0 2px 5px 0 rgba(0, 0, 0, 0.4), 0 5px 15px 0 rgba(0, 0, 0, 0.19);border:1px solid #000;">
                                         </div>
                                         <div class="form-group text-center">
                                             <button type="submit" class="btn btn-orange btn-rounded" style="width:100%;margin-top:20px;">Log In</button>

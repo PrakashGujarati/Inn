@@ -15,9 +15,10 @@ class CreateTariffsTable extends Migration
     {
         Schema::create('tariffs', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('room_id')->references('room')->on('id');
-            $table->float('tariff',8,2);
-            $table->float('extra_bed_tariff',8,2);
+            $table->integer('user_id')->references('id')->on('users');
+            $table->integer('room_no');
+            $table->integer('roomtype_id')->references('roomtype')->on('id');
+            $table->integer('capacity');
             $table->timestamps();
             $table->softDeletes();
         });

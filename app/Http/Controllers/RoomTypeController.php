@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use App\RoomType;
 use http\Env\Response;
 use Illuminate\Http\Request;
 
 class RoomTypeController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:roomtypes.index')->only(['index']);
+        $this->middleware('permission:roomtypes.create')->only('create','store');
+        $this->middleware('permission:roomtypes.edit')->only('show','edit','update');
+        $this->middleware('permission:roomtypes.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -43,9 +52,8 @@ class RoomTypeController extends Controller
             'short_name' => 'required'
         ]);
 
-        // return $request->all();
-        RoomType::create($request->all());
-
+        //RoomType::create($request->all());
+        Auth::user()->roomtypes()->create($request->all());
         return redirect('/roomtypes');
     }
 
@@ -80,15 +88,17 @@ class RoomTypeController extends Controller
      * @param  \App\RoomType  $roomType
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, RoomType $roomtype)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'name' => 'required',
             'short_name' => 'required'
         ]);
 
-        $roomtypes = RoomType::findOrFail($roomtype->id);
-        $roomtypes->update($request->all());
+        //$roomtypes = RoomType::findOrFail($id);
+        //$roomtypes->update($request->all());
+        $ledgergroup = Auth::user()->roomtypes()->findOrFail($id);
+        $ledgergroup->update($request->all());
         return redirect('/roomtypes');
     }
 
@@ -102,5 +112,11 @@ class RoomTypeController extends Controller
     {
         RoomType::destroy($request->id);
         return Response('Success');
+    }
+
+    public function getRoomTypePrices(Request $request)
+    {
+        $roomtypes = RoomType::findOrFail($request->id);
+        return $roomtypes;
     }
 }

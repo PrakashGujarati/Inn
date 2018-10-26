@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Role;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 
 class RegisterController extends Controller
 {
@@ -27,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -36,7 +40,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
 
     /**
@@ -49,8 +53,9 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|string|max:255',
-            'hotel_code' => 'required|numeric|digits_between:2,11',
+            'username' => 'required|string|max:30|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
+            'hotelcode' => 'required|string|max:8',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -65,9 +70,34 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
-            'hotel_code' => $data['hotel_code'],
+            'username' => $data['username'],
             'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+            'hotelcode' => $data['hotelcode'],
+            'password' => Hash::make($data['password']),
+            'role_id' => $data['role_id'],
         ]);
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        $user->attachRole($request->role_id);
+
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
+
+    }
+
+
+
+    protected function showRegistrationForm()
+    {
+        $roles = Role::all();
+        return view('auth.register',compact('roles'));
     }
 }

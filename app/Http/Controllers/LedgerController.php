@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class LedgerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:ledgers.index')->only(['index']);
+        $this->middleware('permission:ledgers.create')->only('create','store');
+        $this->middleware('permission:ledgers.edit')->only('show','edit','update');
+        $this->middleware('permission:ledgers.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

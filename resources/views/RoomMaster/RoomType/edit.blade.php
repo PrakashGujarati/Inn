@@ -9,6 +9,21 @@
     <!-- Data table CSS -->
     <link href="{{asset('dist/vendors/bower_components/datatables/media/css/jquery.dataTables.min.css')}}" rel="stylesheet" type="text/css"/>
     <link href="{{asset('dist/vendors/bower_components/datatables.net-responsive/css/responsive.dataTables.min.css')}}" rel="stylesheet" type="text/css"/>
+    <style>
+        .edit,.delete{
+            visibility: hidden;
+        }
+        @permission('roomtypes.edit')
+        .edit{
+            visibility: visible;
+        }
+        @endpermission
+        @permission('roomtypes.destroy')
+        .delete{
+            visibility: visible;
+        }
+        @endpermission
+    </style>
 @endsection
 
 @section('content')
@@ -36,7 +51,7 @@
                         <div class="panel-wrapper collapse in">
                             <div class="panel-body">
                                 <div class="form-wrap">
-                                    {!! Form::model($roomtype,['method'=>'post','action' =>  ['RoomTypeController@update',$roomtype->id], 'id' => 'roomtype', 'class' => 'form-inline',"files" => "true"]) !!}
+                                    {!! Form::model($roomtype,['method'=>'post','action' =>  ['RoomTypeController@update',$roomtype->id], 'id' => 'roomtype', 'class' => 'form-wrap',"files" => "true"]) !!}
                                     <input type="hidden" id="token" name="_token" value="{{ csrf_token() }}">
 
                                     @include('RoomMaster.RoomType._form')
@@ -56,9 +71,12 @@
                                     <table id="datable_1" class="table table-hover display  pb-30"  style="table-layout:fixed;width: 98% !important;">
                                         <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Short Name</th>
-                                            <th>Action</th>
+                                            <th style="font-weight: bolder">Room Type</th>
+                                            <th style="font-weight: bolder">Short Name</th>
+                                            <th style="font-weight: bolder">Single Bed</th>
+                                            <th style="font-weight: bolder">Double Bed</th>
+                                            <th style="font-weight: bolder">Extra Person</th>
+                                            <th style="font-weight: bolder">Action</th>
                                         </tr>
                                         </thead>
                                     </table>
@@ -90,6 +108,9 @@
                                 return_data.push({
                                     'name': json[i].name,
                                     'short_name': json[i].short_name,
+                                    'person_one': json[i].person_one,
+                                    'person_two': json[i].person_two,
+                                    'extra_person': json[i].extra_person,
                                     'action': '<a class="btn btn-sm btn-primary ti-pencil" style="padding:10px;margin-right:5px;" href="/roomtypes/'+json[i].id+'/edit"></a>'+
                                         '<button type="button" class="delete btn btn-sm btn-danger ti-trash" style="padding:10px;" data-delete-id="'+json[i].id+'" data-token="'+'{!! csrf_token() !!}'+'" ></button>'
                                 })
@@ -100,6 +121,9 @@
                     "columns": [
                         { "data": "name" },
                         { "data": "short_name" },
+                        { "data": "person_one" },
+                        { "data": "person_two" },
+                        { "data": "extra_person" },
                         { "data": "action","width": "80px" }
                     ],
                     "order": [[ 0, "asc" ]]
@@ -110,6 +134,18 @@
             $("#add").click(function () {
                 var name = $("#name").val();
                 var short_name = $("#short_name").val();
+                var person_one = $("#person_one").val();
+                var person_two = $("#person_two").val();
+                var person_three = $("#person_three").val();
+                var person_four = $("#person_four").val();
+                var person_five = $("#person_five").val();
+                var extra_person = $("#extra_person").val();
+                var person_one_nac = $("#person_one_nac").val();
+                var person_two_nac = $("#person_two_nac").val();
+                var person_three_nac = $("#person_three_nac").val();
+                var person_four_nac = $("#person_four_nac").val();
+                var person_five_nac = $("#person_five_nac").val();
+                var extra_person_nac = $("#extra_person_nac").val();
                 var token = $("#token").val();
                 var action = $("#roomtype").attr('action');
 
@@ -121,6 +157,18 @@
                         data: {
                             "name": name,
                             "short_name": short_name,
+                            "person_one": person_one,
+                            "person_two": person_two,
+                            "person_three": person_three,
+                            "person_four": person_four,
+                            "person_five": person_five,
+                            "extra_person": extra_person,
+                            "person_one_nac": person_one_nac,
+                            "person_two_nac": person_two_nac,
+                            "person_three_nac": person_three_nac,
+                            "person_four_nac": person_four_nac,
+                            "person_five_nac": person_five_nac,
+                            "extra_person_nac": extra_person_nac,
                             "_method": 'PUT',
                             "_token": token
                         },
@@ -128,6 +176,18 @@
                             table.ajax.reload();
                             $("#name").val("");
                             $("#short_name").val("");
+                            $("#person_one").val("");
+                            $("#person_two").val("");
+                            $("#person_three").val("");
+                            $("#person_four").val("");
+                            $("#person_five").val("");
+                            $("#extra_person").val("");
+                            $("#person_one_nac").val("");
+                            $("#person_two_nac").val("");
+                            $("#person_three_nac").val("");
+                            $("#person_four_nac").val("");
+                            $("#person_five_nac").val("");
+                            $("#extra_person_nac").val("");
                         },
                         error: function (request, status, error) {
                             var data = request.responseText;
